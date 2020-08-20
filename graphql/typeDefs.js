@@ -3,7 +3,7 @@ const { gql } = require("apollo-server");
 // 느낌표(!) = null값이 아닌 값을 반환할 것을 기대함
 // null 발생 시 오류
 
-export const typeDefs = gql`
+const typeDefs = gql`
     # 글쓰기 관련
     type comments {
         _id: ID
@@ -89,3 +89,5 @@ export const typeDefs = gql`
         newLists: board
     }
 `;
+
+module.exports = typeDefs;

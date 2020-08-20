@@ -1,9 +1,9 @@
-import { ApolloServer, PubSub } from "apollo-server";
+const { ApolloServer, PubSub } = require("apollo-server");
 
-import { resolvers } from "./graphql/resolvers";
-import { typeDefs } from "./graphql/typeDefs";
+const resolvers = require("./graphql/resolvers");
+const typeDefs = require("./graphql/typeDefs");
 
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 // const mongo_url = "mongodb://localhost/trello"; // local
 const mongo_url = "mongodb+srv://admin:1234@cluster0.d1rsj.mongodb.net/trello?retryWrites=true&w=majority"; // mongodb cloud

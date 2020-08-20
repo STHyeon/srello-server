@@ -1,15 +1,15 @@
-import jwt from "jsonwebtoken";
-import bcrypt from "bcryptjs";
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 
-import { APP_SECRET, getUserID } from "../utils/jwt";
+const { APP_SECRET, getUserID } = require("../utils/jwt");
 
-import Board from "../models/board";
-import User from "../models/user";
+const Board = require("../models/board");
+const User = require("../models/user");
 
 const BOARD_UPDATE = "BOARD_UPDATE";
 const LIST_UPDATE = "LIST_UPDATE";
 
-export const resolvers = {
+const resolvers = {
     Query: {
         // 글쓰기 관련
         allBoard: async () => {
@@ -154,3 +154,5 @@ export const resolvers = {
         },
     },
 };
+
+module.exports = resolvers;

@@ -1,7 +1,7 @@
 // let jweObj = {};
 // module.exports = jweObj;
 
-import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
 
 const APP_SECRET = "GRAPHQL";
 
