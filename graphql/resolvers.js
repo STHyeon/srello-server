@@ -37,7 +37,8 @@ const resolvers = {
     Mutation: {
         // 글쓰기 관련
         createBoard: async (_, { title, author }, { pubsub }) => {
-            const boardBox = { title: title, author: author };
+            const published_date = new Date().toString();
+            const boardBox = { title: title, author: author, published_date: published_date };
             const result = await Board.create(boardBox);
 
             pubsub.publish(BOARD_UPDATE, {
@@ -48,7 +49,8 @@ const resolvers = {
         },
 
         createLists: async (_, { id, listTitle, author }, { pubsub }) => {
-            const subListTitle = { listTitle: listTitle, author: author };
+            const published_date = new Date().toString();
+            const subListTitle = { listTitle: listTitle, author: author, published_date: published_date };
             const result = await Board.findByIdAndUpdate({ _id: id }, { $push: { list: subListTitle } }, { new: true });
 
             pubsub.publish(LIST_UPDATE, {
@@ -61,7 +63,8 @@ const resolvers = {
         createComments: async (_, { boardID, listID, content, author }, { pubsub }) => {
             // https://stackoverflow.com/questions/23577123/updating-a-nested-array-with-mongodb
             // nested array 참고 사이트
-            const subComment = { content: content, author: author };
+            const published_date = new Date().toString();
+            const subComment = { content: content, author: author, published_date: published_date };
             const result = await Board.findOneAndUpdate({ _id: boardID, "list._id": listID }, { $push: { "list.$.taskIds": subComment } }, { new: true });
 
             pubsub.publish(LIST_UPDATE, {
@@ -119,7 +122,8 @@ const resolvers = {
                 throw new Error("이미 존재하는 아이디입니다.");
             }
 
-            const user = await User.create({ userID, userName, userPW: password });
+            const published_date = new Date().toString();
+            const user = await User.create({ userID, userName, userPW: password, published_date: published_date });
             const token = jwt.sign({ userID: userID }, APP_SECRET); //jwt.sign({토근의 내용}, 비밀키)
 
             return { token, user };

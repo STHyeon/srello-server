@@ -9,12 +9,14 @@ const typeDefs = gql`
         _id: ID
         content: String
         author: String
+        published_date: Date
     }
 
     type lists {
         _id: ID
         listTitle: String
         author: String
+        published_date: Date
         taskIds: [comments]
     }
 
@@ -22,6 +24,7 @@ const typeDefs = gql`
         _id: ID
         title: String
         author: String
+        published_date: Date
         list: [lists]
     }
 
@@ -38,6 +41,7 @@ const typeDefs = gql`
         user: user
     }
 
+    scalar Date # DATE 타입 정의
     # 글쓰기 입력 관련
     input inputComments {
         _id: ID
