@@ -47,12 +47,14 @@ const typeDefs = gql`
         _id: ID
         content: String
         author: String
+        published_date: Date
     }
 
     input inputList {
         _id: ID
         listTitle: String
         author: String
+        published_date: Date
         taskIds: [inputComments]
     }
 

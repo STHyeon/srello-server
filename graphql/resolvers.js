@@ -37,7 +37,7 @@ const resolvers = {
     Mutation: {
         // 글쓰기 관련
         createBoard: async (_, { title, author }, { pubsub }) => {
-            const published_date = new Date().toString();
+            const published_date = new Date().toString().substr(0, 21);
             const boardBox = { title: title, author: author, published_date: published_date };
             const result = await Board.create(boardBox);
 
@@ -49,7 +49,7 @@ const resolvers = {
         },
 
         createLists: async (_, { id, listTitle, author }, { pubsub }) => {
-            const published_date = new Date().toString();
+            const published_date = new Date().toString().substr(0, 21);
             const subListTitle = { listTitle: listTitle, author: author, published_date: published_date };
             const result = await Board.findByIdAndUpdate({ _id: id }, { $push: { list: subListTitle } }, { new: true });
 
@@ -63,7 +63,7 @@ const resolvers = {
         createComments: async (_, { boardID, listID, content, author }, { pubsub }) => {
             // https://stackoverflow.com/questions/23577123/updating-a-nested-array-with-mongodb
             // nested array 참고 사이트
-            const published_date = new Date().toString();
+            const published_date = new Date().toString().substr(0, 21);
             const subComment = { content: content, author: author, published_date: published_date };
             const result = await Board.findOneAndUpdate({ _id: boardID, "list._id": listID }, { $push: { "list.$.taskIds": subComment } }, { new: true });
 
@@ -122,7 +122,7 @@ const resolvers = {
                 throw new Error("이미 존재하는 아이디입니다.");
             }
 
-            const published_date = new Date().toString();
+            const published_date = new Date().toString().substr(0, 21);
             const user = await User.create({ userID, userName, userPW: password, published_date: published_date });
             const token = jwt.sign({ userID: userID }, APP_SECRET); //jwt.sign({토근의 내용}, 비밀키)
 
