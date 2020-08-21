@@ -113,6 +113,28 @@ const resolvers = {
             return "SUCCESS";
         },
 
+        modifyList: async (_, { boardID, listID, listTitle }, { pubsub }) => {
+            const result = await Board.findOneAndUpdate({ _id: boardID, "list._id": listID }, { "list.$.listTitle": listTitle }, { new: true });
+
+            pubsub.publish(LIST_UPDATE, {
+                newLists: result,
+            });
+
+            return "SUCCESS";
+        },
+
+        modifyComment: async (_, { boardID, listID, content }, { pubsub }) => {
+            const subComment = { content: content };
+            const result = await Board.findOneAndUpdate({ _id: boardID, "list._id": listID }, { "list.$.taskIds": subComment }, { new: true });
+            console.log(result);
+
+            pubsub.publish(LIST_UPDATE, {
+                newLists: result,
+            });
+
+            return result;
+        },
+
         // 회원관련
         signup: async (_, { userID, userName, userPW }) => {
             const password = await bcrypt.hash(userPW, 10);
