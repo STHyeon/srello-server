@@ -5,6 +5,7 @@ const { APP_SECRET, getUserID } = require("../utils/jwt");
 
 const Board = require("../models/board");
 const User = require("../models/user");
+const { db } = require("../models/board");
 
 const BOARD_UPDATE = "BOARD_UPDATE";
 const LIST_UPDATE = "LIST_UPDATE";
@@ -123,16 +124,14 @@ const resolvers = {
             return "SUCCESS";
         },
 
-        modifyComment: async (_, { boardID, listID, content }, { pubsub }) => {
-            const subComment = { content: content };
-            const result = await Board.findOneAndUpdate({ _id: boardID, "list._id": listID }, { "list.$.taskIds": subComment }, { new: true });
-            console.log(result);
+        modifyComment: async (_, { boardID, listID, commentID, content }, { pubsub }) => {
+            const result = await Board.findOneAndUpdate({ _id: boardID }, { "list.$[i].taskIds.$[j].content": content }, { arrayFilters: [{ "i._id": listID }, { "j._id": commentID }] });
 
             pubsub.publish(LIST_UPDATE, {
                 newLists: result,
             });
 
-            return result;
+            return "SUCCESS";
         },
 
         // 회원관련

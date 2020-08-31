@@ -84,7 +84,7 @@ const typeDefs = gql`
         dropComment(boardID: String, listID: String, commentID: String): String
         changePosition(boardID: String, ListAll: inputListAll): String
         modifyList(boardID: String, listID: String, listTitle: String): String
-        modifyComment(boardID: String, listID: String, content: String): String
+        modifyComment(boardID: String, listID: String, commentID: String, content: String): String
 
         # 회원 관련
         signup(userID: String, userName: String, userPW: String): authPayload
