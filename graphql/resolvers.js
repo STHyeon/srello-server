@@ -125,7 +125,7 @@ const resolvers = {
         },
 
         modifyComment: async (_, { boardID, listID, commentID, content }, { pubsub }) => {
-            const result = await Board.findOneAndUpdate({ _id: boardID }, { "list.$[i].taskIds.$[j].content": content }, { arrayFilters: [{ "i._id": listID }, { "j._id": commentID }] });
+            const result = await Board.findOneAndUpdate({ _id: boardID }, { "list.$[i].taskIds.$[j].content": content }, { arrayFilters: [{ "i._id": listID }, { "j._id": commentID }], new: true });
 
             pubsub.publish(LIST_UPDATE, {
                 newLists: result,
