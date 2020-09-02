@@ -6,7 +6,7 @@ const typeDefs = require("./graphql/typeDefs");
 const mongoose = require("mongoose");
 
 // const mongo_url = "mongodb://localhost/trello"; // local
-const mongo_url = "mongodb+srv://admin:1234@cluster0.d1rsj.mongodb.net/trello?retryWrites=true&w=majority"; // mongodb cloud
+const mongo_url = "mongodb+srv://admin:1234@srello.d1rsj.mongodb.net/Srello?retryWrites=true&w=majority"; // mongodb cloud
 
 //usCreateIndex, useNewUrlParser 는 오류 방지용
 mongoose.set("useCreateIndex", true);
@@ -27,7 +27,7 @@ const server = new ApolloServer({
 
 // 경로 지정할 때
 // https://www.apollographql.com/docs/apollo-server/migration-two-dot/#simplified-usage
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 // server.listen(port, () => {
 //     console.log("server on");
 // });
